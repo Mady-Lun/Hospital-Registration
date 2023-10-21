@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Registration</title>
+    <style>
+        body {
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        .intro {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .button {
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 7px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            transition: background-color 0.3s;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        #health-report {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="text-align: center;">Hospital Registration</h2>
+    <p class="intro">Please make sure to fill in the accurate information of the patient. The information is securely kept confidential.</p>
+
+    <form id="patient-form">
+        <h4>Patient's name</h4>
+        <label for="name"></label>
+        <input type="text" id="name" name="name" required>
+
+        <h4>Age</h4>
+        <label for="age"></label>
+        <input type="number" id="age" name="age" required>
+
+        <h4>Gender</h4>
+        <input type="radio" name="gender" value="Male" required>
+        <label for="male">Male</label><br>
+        <input type="radio" name="gender" value="Female" required>
+        <label for="female">Female</label><br>
+        <input type="radio" name="gender" value="Prefer not to say" required>
+        <label for="non">Prefer not to say</label>
+
+        <h4>Phone Number</h4>
+        <label for="number"></label>
+        <input type="tel" id="tel" name="number" required>
+
+        <h4>Address</h4>
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required>
+
+        <h4>Symptoms</h4>
+        <div>
+            <h5>Current Diagnosis</h5>
+        </div>
+
+        <label for="elaborate1">Please Elaborate:</label>
+        <input type="text" id="elaborate1" name="elaborate1">
+
+        <div>
+            <h5>Previous/Chronic Illness</h5>
+        </div>
+
+        <label for="elaborate2">Please Elaborate:</label>
+        <input type="text" id="elaborate2" name="elaborate2">
+
+        <h4>Medication</h4>
+        <label for="medication">Is the patient currently undergoing any medication?</label>
+        <input type="text" id="medication" name="medication">
+
+        <h4>Release of Information</h4>
+        <label for="names">Name(s):</label>
+        <input type="text" id="names" name="names">
+        <label for="relationship">Relationship:</label>
+        <input type="text" id="relationship" name="relationship"><br>
+
+        <input type="checkbox" name="agree" required>
+        <label for="name">I hereby agree with all terms and conditions.</label>
+
+        <div class="confirm">
+            <button class="button" type="submit">Submit</button>
+        </div>
+    </form>
+
+    <div id="health-report">
+        <!-- Health report will be displayed here after submission -->
+    </div>
+
+    <script>
+        const form = document.getElementById("patient-form");
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+            const genderRadios = form.querySelectorAll('input[name="gender"]');
+            const checkedGender = Array.from(genderRadios).find(radio => radio.checked);
+            const phone = document.getElementById("tel").value;
+            const address = document.getElementById("address").value;
+            const elaborate1 = document.getElementById("elaborate1").value;
+            const elaborate2 = document.getElementById("elaborate2").value;
+            const medication = document.getElementById("medication").value;
+            const names = document.getElementById("names").value;
+            const relationship = document.getElementById("relationship").value;
+
+            const patientInfo = `
+                <h2>Patient Information</h2>
+                <p>Name: ${name}</p>
+                <p>Age: ${age}</p>
+                <p>Gender: ${checkedGender ? checkedGender.value : "N/A"}</p>
+                <p>Phone: ${phone}</p>
+                <p>Address: ${address}</p>
+                
+                <p>Symptoms Elaboration: ${elaborate1}</p>
+                
+                <p>Chronic Illnesses Elaboration: ${elaborate2}</p>
+                <p>Medication: ${medication}</p>
+                <p>Release of Information - Name(s): ${names}</p>
+                <p>Release of Information - Relationship: ${relationship}</p>
+            `;
+
+            document.getElementById("health-report").innerHTML = patientInfo;
+        });
+    </script>
+</body>
+</html>
